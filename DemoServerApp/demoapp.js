@@ -1,0 +1,29 @@
+var express = require("express");
+var cors = require("cors");
+
+var dbOperations = require('./firestoreDbOperations');
+
+
+var serverApp = express();
+serverApp.use(cors());
+
+
+var apiRouter = express.Router();
+serverApp.use("/api", apiRouter);
+
+apiRouter.route("/userslist")
+    .get(function(req, res) {
+        dbOperations.readUsersList(function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                let list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
+
+
+serverApp.listen(3000);
