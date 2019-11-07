@@ -1,1 +1,20 @@
-<p>users-list works!</p>
+
+<div>
+    <h5>USERS:</h5>
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                <th>Фамилиё</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i=index;">
+                <td>{{user.id}}</td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
