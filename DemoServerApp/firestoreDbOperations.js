@@ -33,21 +33,30 @@ module.exports = {
 
     readUserStatistics: function(userId, callback) {
 
-      db.collection("users_statistic").where("user_id", "==", userId)
-      .orderBy("date")
-      .limit(50)
-      .get()
-      .then((querySnapshot) => {
-        let result = [];
-        querySnapshot.forEach((doc) => {
-          result.push(doc.data());
-        });
-        callback(null, result);
+      // check user's existence before
+      let docName = String(userId - 1);
+      db.collection("users").doc(docName).get().then(function(doc) {
+        if (doc.exists) {
+          db.collection("users_statistic").where("user_id", "==", userId)
+          .orderBy("date")
+          .get()
+          .then((querySnapshot) => {
+            let result = [];
+            querySnapshot.forEach((doc) => {
+              result.push(doc.data());
+            });
+            callback(null, result);
+          })
+          .catch((error) => {
+            callback(error, null);
+          });
+        } else {
+          console.log('No such document!');
+        }
       })
       .catch((error) => {
         callback(error, null);
       });
-
   }
 
 }
