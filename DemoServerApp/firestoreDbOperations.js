@@ -12,10 +12,23 @@ var db = firebase.firestore();
 
 module.exports = {
 
-    readUsersList: function(callback) {
+    readUsersList: function(startRow, callback) {
+
+        var count;
 
         db.collection("users")
         .orderBy("id")
+        .get()
+        .then((querySnapshot) => {
+          count = querySnapshot.size;
+        })
+        .catch((error) => {
+          callback(error, null);
+        });
+
+        db.collection("users")
+        .orderBy("id")
+        .startAfter(startRow)
         .limit(50)
         .get()
         .then((querySnapshot) => {
@@ -23,7 +36,11 @@ module.exports = {
           querySnapshot.forEach((doc) => {
             result.push(doc.data());
           });
-          callback(null, result);
+          dataModel = {
+            rows: result,
+            count: count
+          }
+          callback(null, dataModel);
         })
         .catch((error) => {
           callback(error, null);

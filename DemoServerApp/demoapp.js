@@ -13,7 +13,8 @@ serverApp.use("/api", apiRouter);
 
 apiRouter.route("/userslist")
     .get(function(req, res) {
-        dbOperations.readUsersList(function(err, result) {
+        let startRow = parseInt(req.query.startRow);
+        dbOperations.readUsersList(startRow, function(err, result) {
             if (err) {
                 res.status(500);
                 res.send(err);
