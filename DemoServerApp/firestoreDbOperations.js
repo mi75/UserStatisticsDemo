@@ -1,26 +1,34 @@
 
-var result = [
-    {
-      id: 1,
-      first_name: 'Tom',
-      last_name: 'Lee'
-    },
-    {
-      id: 2,
-      first_name: 'Dee',
-      last_name: 'Smith'
-    },
-    {
-      id: 3,
-      first_name: 'Dan',
-      last_name: 'Brown'
-    }
-];
+const firebase = require("firebase");
+
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyBAMHyn99ez4mY2bjK7E0VOpgGQNfxxMeg",
+  authDomain: "userstatisticsdemo.firebaseapp.com",
+  projectId: "userstatisticsdemo"
+});
+
+var db = firebase.firestore();
 
 module.exports = {
+
     readUsersList: function(callback) {
-        
-        callback(null, result);
+
+        db.collection("users")
+        .orderBy("id")
+        .limit(50)
+        .get()
+        .then((querySnapshot) => {
+          let result = [];
+          querySnapshot.forEach((doc) => {
+            result.push(doc.data());
+          });
+          callback(null, result);
+        })
+        .catch((error) => {
+          callback(error, null);
+        });
 
     }
+
 }
