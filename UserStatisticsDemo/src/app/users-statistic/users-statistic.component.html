@@ -1,1 +1,20 @@
 <p>users-statistic works!</p>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>date</th>
+                <th>clicks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visit of visits; let i=index;">
+                <td>{{visit.user_id}}</td>
+                <td>{{visit.date}}</td>
+                <td>{{visit.clicks}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
