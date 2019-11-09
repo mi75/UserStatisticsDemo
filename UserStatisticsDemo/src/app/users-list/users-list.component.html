@@ -1,20 +1,43 @@
+<div class="userslist">
+    <div class="row">
+        <div class="col-sm-0 col-md-4"></div>
+        <div class="col-sm-6 col-md-4">
+            <h5>USERS</h5>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="rev-nav">
+                <button type="button" class="btn btn-outline-secondary btn-lg" (click)="fbReverse()"><</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg" (click)="fbForwarding()">></button>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h5>USERS:</h5>
-    <table>
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Имя</th>
-                <th>Фамилиё</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users; let i=index;">
-                <td>{{user.id}}</td>
-                <td>{{user.first_name}}</td>
-                <td>{{user.last_name}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-condensed table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>first name</th>
+                    <th>last name</th>
+                    <th>email</th>
+                    <th>gender</th>
+                    <th>ip address</th>
+                    <th>total clicks</th>
+                    <th>total page views</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; let i=index;" routerLink="statistic/{{user.id}}">
+                    <td>{{user.id}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.gender}}</td>
+                    <td>{{user.ip_address}}</td>
+                    <td>{{user.total_clicks}}</td>
+                    <td>{{user.total_page_views}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
