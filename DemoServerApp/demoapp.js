@@ -16,7 +16,7 @@ apiRouter.route("/userslist")
         dbOperations.readUsersList(function(err, result) {
             if (err) {
                 res.status(500);
-                res.send(err.sqlMessage);
+                res.send(err);
             } else {
                 let list = '';
                 if (result) list = JSON.stringify(result);
@@ -25,5 +25,19 @@ apiRouter.route("/userslist")
         });
     });
 
+apiRouter.route("/userstat")
+    .get(function(req, res) {
+        let userId = parseInt(req.query.userId);
+        dbOperations.readUserStatistics(userId, function(err, result) {
+            if (err) {
+                res.status(500);
+                res.send(err);
+            } else {
+                let list = '';
+                if (result) list = JSON.stringify(result);
+                res.send(list);
+            }
+        });
+    });
 
 serverApp.listen(3000);

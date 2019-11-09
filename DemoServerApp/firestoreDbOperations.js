@@ -29,6 +29,25 @@ module.exports = {
           callback(error, null);
         });
 
-    }
+    },
+
+    readUserStatistics: function(userId, callback) {
+
+      db.collection("users_statistic").where("user_id", "==", userId)
+      .orderBy("date")
+      .limit(50)
+      .get()
+      .then((querySnapshot) => {
+        let result = [];
+        querySnapshot.forEach((doc) => {
+          result.push(doc.data());
+        });
+        callback(null, result);
+      })
+      .catch((error) => {
+        callback(error, null);
+      });
+
+  }
 
 }
