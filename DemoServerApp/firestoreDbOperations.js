@@ -50,7 +50,7 @@ module.exports = {
 
     readUserStatistics: function(userId, callback) {
 
-      // check user's existence before
+      // check user's existence before ("перед выборкой данных должна выполняться проверка на существование пользователя в таблице users")
       let docName = String(userId - 1);
       db.collection("users").doc(docName).get().then(function(doc) {
         if (doc.exists) {
@@ -74,6 +74,6 @@ module.exports = {
       .catch((error) => {
         callback(error, null);
       });
-  }
-
+    }
+    
 }
