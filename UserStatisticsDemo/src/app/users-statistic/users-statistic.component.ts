@@ -12,7 +12,7 @@ import { Color, Label } from 'ng2-charts';
 export class UsersStatisticComponent implements OnInit {
 
   visits:any[];
-  WhichOfUsers:string;
+  whichOfUsers:string;
   lineChartLabels: Label[] = [];
   lineChartData: ChartDataSets[] = [
     { data: [], label: 'Clicks' },
@@ -27,7 +27,7 @@ export class UsersStatisticComponent implements OnInit {
   ngOnInit() {
 
     let selectedUser = this.route.snapshot.paramMap.get('userId');
-    this.WhichOfUsers = selectedUser;
+    this.whichOfUsers = selectedUser;
     this.toServer.getData('api/userstat?userId=' + selectedUser).subscribe( 
       res => {
         this.visits = res;
@@ -40,6 +40,26 @@ export class UsersStatisticComponent implements OnInit {
       error => alert(error)
     );
 
+  }
+
+  getStatistics(startDate, lastDate) {
+    let selectedUser = this.whichOfUsers;
+    let start=startDate.value;
+    let last=lastDate.value;
+    this.toServer.getData('api/usersdat?userId=' + selectedUser + '&start=' + start + '&last=' + last).subscribe( 
+      res => {
+        this.visits = res;
+        this.lineChartLabels = [];
+        this.lineChartData[0].data = [];
+        this.lineChartData[1].data = [];
+        for (let i=0; i<this.visits.length; i++) {
+          this.lineChartLabels.push(this.visits[i].date);
+          this.lineChartData[0].data.push(this.visits[i].clicks);
+          this.lineChartData[1].data.push(this.visits[i].page_views);
+        };
+      },
+      error => alert(error)
+    );
   }
 
   lineChartOptions = {
