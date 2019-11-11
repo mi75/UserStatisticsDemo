@@ -8,7 +8,8 @@ import { HttpClient} from '@angular/common/http';
 
 export class ApiCallerService {
 
-  public static readonly webAdddr = 'http://127.0.0.1:3000/';
+  // public static readonly webAdddr = 'http://127.0.0.1:3000/';
+  public static readonly webAdddr = 'serverApp';
 
   constructor(
     private http: HttpClient
