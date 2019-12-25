@@ -1,0 +1,98 @@
+import { Component, OnInit } from '@angular/core';
+import { ApiCallerService } from '../_services/api-caller.service';
+import { ActivatedRoute } from '@angular/router';
+// import { ChartDataSets, ChartOptions } from 'chart.js';
+// import { Color, Label } from 'ng2-charts';
+
+@Component({
+  selector: 'app-users-statistic',
+  templateUrl: './users-statistic.component.html',
+  styleUrls: ['./users-statistic.component.scss']
+})
+export class UsersStatisticComponent implements OnInit {
+
+  visits:any[];
+  whichOfUsers:string;
+
+  pp1:string = 'Univers';
+  paramToChild1:string = 'Plan 9';
+  paramToChild2:number = 15;
+  count:number = 0;
+  linkedParam:string;
+  cnt :number = 0;
+
+
+  // lineChartLabels: Label[] = [];
+  // lineChartData: ChartDataSets[] = [
+  //   { data: [], label: 'Clicks' },
+  //   { data: [], label: 'Views' },
+  // ];
+
+  constructor(
+    private toServer: ApiCallerService,
+    private route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+
+    let selectedUser = this.route.snapshot.paramMap.get('userId');
+    this.whichOfUsers = selectedUser;
+    this.toServer.getData('api/userstat?userId=' + selectedUser).subscribe( 
+      res => {
+        this.visits = res;
+        this.linkedParam = this.visits[0].mod;
+        // for (let i=0; i<this.visits.length; i++) {
+        //   this.lineChartLabels.push(this.visits[i].date);
+        //   this.lineChartData[0].data.push(this.visits[i].clicks);
+        //   this.lineChartData[1].data.push(this.visits[i].page_views);
+        // };
+      },
+      error => alert(error)
+    );
+
+  }
+
+  onChanged(increased:any) {
+    increased==true?this.count++:this.count--;
+  }
+
+  public onClicked(cnt){
+    this.cnt = cnt;
+  }
+
+  // getStatistics(startDate, lastDate) {
+  //   let selectedUser = this.whichOfUsers;
+  //   let start=startDate.value;
+  //   let last=lastDate.value;
+  //   this.toServer.getData('api/usersdat?userId=' + selectedUser + '&start=' + start + '&last=' + last).subscribe( 
+  //     res => {
+  //       this.visits = res;
+  //       this.lineChartLabels = [];
+  //       this.lineChartData[0].data = [];
+  //       this.lineChartData[1].data = [];
+  //       for (let i=0; i<this.visits.length; i++) {
+  //         this.lineChartLabels.push(this.visits[i].date);
+  //         this.lineChartData[0].data.push(this.visits[i].clicks);
+  //         this.lineChartData[1].data.push(this.visits[i].page_views);
+  //       };
+  //     },
+  //     error => alert(error)
+  //   );
+  // }
+
+  // lineChartOptions = {
+  //   responsive: true,
+  // };
+
+  // lineChartColors: Color[] = [
+  //   {
+  //     borderColor: 'black',
+  //     backgroundColor: 'rgba(255,255,0,0)',
+  //   },
+  // ];
+
+  // lineChartLegend = true;
+  // lineChartPlugins = [];
+  // lineChartType = 'line';
+
+}

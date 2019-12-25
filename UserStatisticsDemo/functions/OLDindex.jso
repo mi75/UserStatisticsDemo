@@ -1,28 +1,18 @@
 
-'use strict';
-
 var express = require("express");
-const functions = require('firebase-functions');
-// const cors = require('cors')({
-//   origin: true,
-// });
+var cors = require("cors");
+var functions = require('firebase-functions');
+
 var dbOperations = require('./firestoreDbOperations');
-
-var serverApp = express();
-
-var apiRouter = express.Router();
-serverApp.use("/api", apiRouter);
 
 exports.serverApp = functions.https.onRequest(serverApp);
 
-// exports.serverApp = functions.https.onRequest((req, res) => {
-  
-//   return cors(req, res, () => {
-    
-//     res.status(200).send("test test");
+var serverApp = express();
+serverApp.use(cors({origin: '*'}));
 
-//   });
-// });
+
+var apiRouter = express.Router();
+serverApp.use("/api", apiRouter);
 
 apiRouter.route("/userslist")
     .get ((req, res) => {
@@ -77,3 +67,4 @@ apiRouter.route("/usersdat")
         });
     });
 
+serverApp.listen(3000);

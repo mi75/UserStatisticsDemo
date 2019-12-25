@@ -1,0 +1,8 @@
+<div class="forms">
+    <p>forms works!</p>
+    <button (click)="change(true)">+</button>
+    <button (click)="change(false)">-</button>
+    <input [ngModel]="someParam" (ngModelChange)="onSomeParamChange($event)" />
+    <button (click)="clickMe()">click me {{clickCnt}}</button>
+    <button (click)="clickSrv()">click serv {{servCnt}}</button>
+</div>

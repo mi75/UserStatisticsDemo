@@ -1,6 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { ApiCallerService } from '../_services/api-caller.service';
 import { usersFormat } from '../users-format';
+
+
+export class Phone{
+      constructor(public title: string, 
+                  public price: number, 
+                  public company: string)
+      { }
+}
+
 
 @Component({
   selector: 'app-users-list',
@@ -15,6 +24,9 @@ export class UsersListComponent implements OnInit {
   pCount:number = 1;
   pSum:number = 0;
 
+  count:number = 0;
+  localName:string = 'Tom';
+
   constructor(
     private toServer: ApiCallerService
   ) { }
@@ -23,27 +35,39 @@ export class UsersListComponent implements OnInit {
     this.getUsers();
   }
 
+  incr($event) : void {
+    this.count++;
+    console.log($event);
+  }
+
+  phones: Phone[] = [];
+  companies: string[] = ["Apple", "Huawei", "Xiaomi", "Samsung", "LG", "Motorola", "Alcatel"];
+     
+  addPhone(title: string, price: number, company: string){
+      this.phones.push(new Phone(title, price, company));
+  }
+
   getUsers() {
     this.pCount = 1;
     this.toServer.getData('api/userslist?startRow=0').subscribe( res => {
       this.users = res.rows;
       this.rowsCounter = res.count;
-      this.pSum = this.rowsCounter/50;
+      this.pSum = Math.ceil(this.rowsCounter/3);
     } );
     this.startRow = 0;
   }
 
   fbForwarding() {
-    this.startRow += 50;
+    this.startRow += 3;
     this.pCount += 1;
-    if (this.startRow > this.rowsCounter - 50) this.startRow = this.rowsCounter - 50;
+    if (this.startRow > this.rowsCounter - 3) this.startRow = this.rowsCounter - 3;
     this.toServer.getData('api/userslist?startRow=' + this.startRow).subscribe( res => {
       this.users = res.rows;
     } );
   }
 
   fbReverse() {
-    this.startRow -= 50;
+    this.startRow -= 3;
     this.pCount -= 1;
     if (this.startRow < 0) this.startRow = 0;
     this.toServer.getData('api/userslist?startRow=' + this.startRow).subscribe( res => {
@@ -52,12 +76,14 @@ export class UsersListComponent implements OnInit {
   }
 
   toPage(page) {
-    this.startRow = (page.value-1)*50;
-    this.pCount = page.value;
-    if (this.startRow > this.rowsCounter - 50) this.startRow = this.rowsCounter - 50;
+    this.startRow = (page.value-1)*3;
+    this.pCount = +page.value;
+    if (this.startRow > this.rowsCounter - 3) this.startRow = this.rowsCounter - 3;
     this.toServer.getData('api/userslist?startRow=' + this.startRow).subscribe( res => {
       this.users = res.rows;
     } );
+    page.value = "";
   }
+
 
 }

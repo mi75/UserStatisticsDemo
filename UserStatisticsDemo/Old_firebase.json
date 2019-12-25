@@ -8,9 +8,8 @@
     ],
     "rewrites": [
       {
-        "source": "/serverApp",
-        
-        "function": "serverApp"
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },

@@ -1,3 +1,4 @@
+
 <div class="userslist">
     <div class="row">
         <div class="col-sm-0 col-md-4"></div>
@@ -8,7 +9,7 @@
             <div class="rev-nav">
                 <button type="button" class="btn btn-outline-secondary btn-lg" (click)="fbReverse()" title="last page"><</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg" (click)="fbForwarding()"title="next page">></button><br>
-                <span>Total pages: {{pSum}}. Current: {{pCount}}. Go to page </span><input type="number" #page value="1" min="1" max={{pSum}} title="">
+                <span>Total pages: {{pSum}}. Current: {{pCount}}. Go to page </span><input type="number" #page min="1" max={{pSum}} [value]="pCount" title="">
                 <button type="button" class="btn btn-outline-secondary btn-lg" (click)="toPage(page)">Go</button>
             </div>
         </div>
@@ -31,8 +32,8 @@
             <tbody>
                 <tr *ngFor="let user of users; let i=index;" routerLink="statistic/{{user.id}}">
                     <td>{{user.id}}</td>
-                    <td>{{user.first_name}}</td>
-                    <td>{{user.last_name}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.note}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.gender}}</td>
                     <td>{{user.ip_address}}</td>
@@ -42,4 +43,37 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<p>Count: {{count}}</p>
+<button (click)="incr($event)">Click</button> <br><br>
+<p>Hi, {{localName}}</p>
+<input name="ln" [(ngModel)]="localName" /> <br>
+<input name="ln" [(ngModel)]="localName" />
+
+<div> 
+    <div class="form-group">
+        <label>Название модели</label>
+        <input class="form-control" name="title" [(ngModel)]="title" />
+    </div>
+    <div class="form-group">
+        <label>Цена</label>
+        <input type="number" class="form-control" name="price" [(ngModel)]="price" />
+    </div>
+    <div class="form-group">
+        <label>Производитель</label>
+        <select class="form-control" name="company" [(ngModel)]="company">
+            <option  *ngFor="let comp of companies" [value]="comp">
+                {{comp}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-default" (click)="addPhone(title, price, company)">Добавить</button>
+    </div>
+</div>
+<div><h3>Добавленные элементы</h3>
+    <ul *ngFor="let p of phones">
+        <li>{{p.title}} ({{p.company}}) - {{p.price}}</li>
+    </ul>
 </div>

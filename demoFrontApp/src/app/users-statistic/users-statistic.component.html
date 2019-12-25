@@ -1,0 +1,55 @@
+
+<h4>User {{whichOfUsers}} statistic:</h4>
+
+<!-- <div>
+    <input type="date" #newStartDate>
+    <input type="date" #newLastDate>
+    <button type="button" class="btn btn-outline-primary btn-lg" (click)="getStatistics(newStartDate, newLastDate)">Go</button>
+</div> -->
+
+<!-- <div class="chart-wrapper">
+    <canvas baseChart 
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels" 
+        [options]="lineChartOptions"
+        [colors]="lineChartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+</div> -->
+
+<div class="table-responsive">
+    <table class="table table-condensed table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>type</th>
+                <th>clicks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let visit of visits; let i=index;">
+                <td>{{visit.id}}</td>
+                <td>{{visit.mod}}</td>
+                <td>{{visit.memo}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<input type="text" [(ngModel)]="paramToChild1" />
+<input type="number" [(ngModel)]="paramToChild2" />
+<!-- <h6>From forms: {{count}}</h6> -->
+<h6>LinkedParam: {{linkedParam}}</h6>
+
+<app-forms (onChanged)="onChanged($event)" [(someParam)]="linkedParam" (clickChange)="onClicked($event)"></app-forms>
+<app-reports [param1]="paramToChild1" [param2]="paramToChild2" #counter [clickCount]="cnt">
+    <h6>Parent's param {{pp1}}</h6>
+    <h6>From forms: {{count}}</h6>
+</app-reports>
+
+<!-- to child component's via template's var: -->
+<button (click)="counter.increment()">+</button>
+<button (click)="counter.decrement()">-</button>
+
