@@ -21,11 +21,12 @@ export class FormsComponent implements OnInit {
   @Output() onChanged = new EventEmitter<boolean>();
   change(increased:any) {
     this.onChanged.emit(increased);
-    // if(increased===true) {
-    //   this.toOtherComponent.setUserLoggedIn(true);
-    // } else {
-    //   this.toOtherComponent.setUserLoggedIn(false);
-    // }
+    // for report via service:
+    if(increased===true) {
+      this.toOtherComponent.setUserLoggedIn(true);
+    } else {
+      this.toOtherComponent.setUserLoggedIn(false);
+    }
   }
 
   @Input() someParam:string;

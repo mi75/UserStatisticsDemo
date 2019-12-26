@@ -8,11 +8,11 @@ export class TransComponentsService {
 
   constructor() { }
 
-//   public isUserLoggedIn = new Subject();
+  public isUserLoggedIn = new Subject();
 
-//   setUserLoggedIn(loggedIn: boolean) {
-//     this.isUserLoggedIn.next(loggedIn);
-//  }
+  setUserLoggedIn(loggedIn: boolean) {
+    this.isUserLoggedIn.next(loggedIn); // to report indicate
+ }
 
 private clickCnt:number = 0;
 onClick = new EventEmitter<number>();

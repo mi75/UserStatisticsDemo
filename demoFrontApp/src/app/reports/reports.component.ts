@@ -9,7 +9,7 @@ import { TransComponentsService } from '../_services/trans-components.service';
 export class ReportsComponent implements OnInit {
 
   counter: number = 0;
-  // isUserLoggedIn: boolean;
+  isUserLoggedIn: boolean;
   srvCount:number=0;
 
   constructor(
@@ -19,9 +19,10 @@ export class ReportsComponent implements OnInit {
    }
 
   ngOnInit() {
-  //   this.fromOtherComponent.isUserLoggedIn.subscribe((userLoggedIn: boolean) => {
-  //      this.isUserLoggedIn = userLoggedIn;
-  //  });
+    // receive changing via service:
+    this.fromOtherComponent.isUserLoggedIn.subscribe((userLoggedIn: boolean) => {
+       this.isUserLoggedIn = userLoggedIn;
+   });
   }
 
   increment() { this.counter++; }
